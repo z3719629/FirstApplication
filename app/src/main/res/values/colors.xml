@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1cff0000</color>
+    <color name="colorPrimaryDark">#0dff00</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhiteNormal">#dee6df</color>
+
+    <color name="tabLayoutColor">#bfffea03</color>
+
+    <color name="toolBarColor">#01000000</color>
+
+    <color name="primary">#99f5c0</color>
+    <color name="primary_dark">#FF0288D1</color>
+    <color name="status_bar_color">@color/primary_dark</color>
+
+    <color name="recycle_view">#ffffff</color>
+
+    <color name="transparence">#00000000</color>
+</resources>

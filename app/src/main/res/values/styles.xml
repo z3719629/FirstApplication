@@ -1,0 +1,28 @@
+<resources>
+
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+
+        <item name="colorPrimary">@color/transparence</item>    <!-- 状态栏 -->
+        <item name="colorPrimaryDark">@color/transparence</item> <!-- toolbar -->
+        <item name="colorAccent">@color/colorAccent</item>  <!-- 重点 -->
+
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="BaseAppTheme" >
+
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="BaseAppTheme" />
+
+    <style name="AppTheme.Immersive" parent="BaseAppTheme">
+    </style>
+
+
+</resources>

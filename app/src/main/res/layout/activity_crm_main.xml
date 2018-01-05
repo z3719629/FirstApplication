@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="crmMain"
+            type="com.crm.firstapplication.model.CrmMain" />
+    </data>
+
+    <android.support.v4.widget.DrawerLayout
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="false">
+
+        <include android:id="@+id/app_bar"
+            layout="@layout/app_bar_layout"
+            bind:crmMain="@{crmMain}" />
+
+        <!--侧滑菜单-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/recycle_view"
+            android:orientation="vertical"
+            android:layout_gravity="start"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/iv_main"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/lv_left_menu"
+                android:background="#a3d3d8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main"
+            app:menu="@menu/activity_main_drawer"
+            android:layout_marginEnd="-65dp"/>
+
+    </android.support.v4.widget.DrawerLayout>
+</layout>

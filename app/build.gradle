@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'org.greenrobot.greendao' // apply plugin
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "27.0.2"
+
+    defaultConfig {
+        applicationId "com.crm.firstapplication"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true;
+    }
+
+//    greendao {
+//        //数据库的schema版本，也可以理解为数据库版本号
+//        schemaVersion 1
+//        //设置DaoMaster、DaoSession、Dao包名，也就是要放置这些类的包的全路径。
+//        daoPackage 'cn.hnshangyu.testgreendao.greendao'
+//        //设置DaoMaster、DaoSession、Dao目录
+//        targetGenDir 'src/main/java'
+//    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.+'
+    compile 'com.android.support:design:23.+'
+    compile 'org.xutils:xutils:3.5.0'
+
+    compile 'com.ikimuhendis:ldrawer:0.1' // 动态侧边栏插件
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4' // 状态栏插件
+
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar' // 动态权限获取
+
+    //ConverterFactory的String依赖包----这个是解析数据的工厂.用来格式化数据的,配置编码啊,gson解析啊.
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
+
+    compile "io.reactivex.rxjava2:rxjava:2.0.8"
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0' // 处理网络请求
+
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    // gson
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+
+    // fastjson
+    //compile 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0' // retrofit2使用rxjava2
+
+    // rxjava内存泄露
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.0.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+
+    compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
+        exclude group: 'com.android.support'
+    })
+
+    compile 'org.greenrobot:greendao:3.2.2' // greendao 数据库sqllite
+
+    //compile 'jp.wasabeef:recyclerview-animators:2.2.7'  // recyclerview动画插件
+
+}

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UserApplication</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <drawable name="recycle_view_normal">#fafafa</drawable>
+    <drawable name="recycle_view_pressed">#aba3a0</drawable>
+</resources>

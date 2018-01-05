@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="mainFragment"
+            type="com.crm.firstapplication.model.MMainFragment"/>
+    </data>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@={mainFragment.textView}"
+        android:id="@+id/textView"
+        android:textColor="@color/abc_secondary_text_material_dark" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_gravity="center_horizontal"
+        android:text="@={mainFragment.editText}"
+        android:textColor="@color/abc_btn_colored_borderless_text_material" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@={mainFragment.buttonName}"
+        android:id="@+id/button"
+        android:textAllCaps="false"/>
+
+</LinearLayout>
+</layout>

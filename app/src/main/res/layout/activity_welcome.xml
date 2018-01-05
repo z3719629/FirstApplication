@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="mWelcome"
+            type="com.crm.firstapplication.model.MWelcome" />
+    </data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/welcome_image_padding"
+    android:paddingLeft="@dimen/welcome_image_padding"
+    android:paddingRight="@dimen/welcome_image_padding"
+    android:paddingTop="@dimen/welcome_image_padding"
+    tools:context="com.crm.firstapplication.activity.WelcomeActivity">
+
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:progress="@{mWelcome.progress}"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
+</layout>
