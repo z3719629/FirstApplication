@@ -1,11 +1,17 @@
 package com.crm.userapplication.adapter;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.crm.userapplication.R;
 
 import java.util.List;
 
@@ -21,6 +27,8 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
 
     public abstract int getLayoutId(int viewType);
 
+    public abstract int getPopupId(int viewType);
+
     /**
      * 可以根据类型设置xml布局 默认0
      * @param position
@@ -33,7 +41,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return RecycleViewHolder.get(parent,getLayoutId(viewType));
+        return RecycleViewHolder.get(parent, getLayoutId(viewType), getPopupId(viewType));
     }
 
     @Override
@@ -41,28 +49,33 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
         convert(holder, mDatas.get(position), position);
     }
 
-
-
     @Override
     public int getItemCount() {
         return mDatas.size();
     }
 
-    public abstract void convert(RecycleViewHolder holder, T data, int position);
+    public abstract void convert(final RecycleViewHolder holder, T data, int position);
 
     protected static class RecycleViewHolder extends RecyclerView.ViewHolder{
         private SparseArray<View> mViews;
         private View mConvertView;
+        private PopupWindow popupView;
 
-        private RecycleViewHolder(View v){
+        private RecycleViewHolder(View v, View popView){
             super(v);
             mConvertView = v;
             mViews = new SparseArray<>();
+
+            popupView = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+            popupView.setTouchable(true);
+            popupView.setOutsideTouchable(true);
         }
 
-        public static RecycleViewHolder get(ViewGroup parent, int layoutId){
-            View convertView = LayoutInflater.from(parent.getContext()).inflate(layoutId, null, false);
-            return new RecycleViewHolder(convertView);
+        public static RecycleViewHolder get(ViewGroup parent, int layoutId, int popId){
+            Context context = parent.getContext();
+            View convertView = LayoutInflater.from(context).inflate(layoutId, null, false);
+            View popView = LayoutInflater.from(context).inflate(R.layout.layout_popwindow_recyclerview, parent, false);
+            return new RecycleViewHolder(convertView, popView);
         }
 
         public <VIEW extends View> VIEW getView(int id){
@@ -78,6 +91,11 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
             TextView view = getView(id);
             view.setText(value);
         }
+
+        public PopupWindow getPopUpView() {
+            return this.popupView;
+        }
+
     }
 
 }

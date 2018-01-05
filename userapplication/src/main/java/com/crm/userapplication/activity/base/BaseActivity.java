@@ -7,6 +7,7 @@ import com.crm.userapplication.presenter.base.IBasePresenter;
 import com.crm.userapplication.rxbus.Events;
 import com.crm.userapplication.rxbus.RxBus;
 import com.crm.userapplication.sqllite.DBManager;
+import com.crm.userapplication.util.ZUtil;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.xutils.ex.DbException;
@@ -20,6 +21,8 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Administrator on 2017/12/28.
  */
 public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompatActivity implements IBaseView {
+
+    protected ZUtil util;
 
     protected T presenter;
 
@@ -40,6 +43,10 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
                 });
 
         DBManager.initDb();
+
+        // ZUtil
+        this.util = ZUtil.getInstance();
+        this.util.setContext(this);
 
         this.presenter = getP();
 

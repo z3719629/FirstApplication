@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         tools:context="com.crm.userapplication.fragment.LoginTabOneFragment">
 
-        <android.support.v7.widget.RecyclerView
+        <com.crm.userapplication.view.RecyclerViewImplementsContextMenu
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recycler_view" />

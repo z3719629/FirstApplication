@@ -11,10 +11,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +28,7 @@ import com.crm.userapplication.adapter.RecyclerViewAdapter;
 import com.crm.userapplication.adapter.SimplePaddingDecoration;
 import com.crm.userapplication.databinding.FragmentLoginBinding;
 import com.crm.userapplication.rxbus.Events;
+import com.crm.userapplication.rxbus.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,8 @@ import io.reactivex.annotations.NonNull;
 public class LoginTabOneFragment extends BaseFragment {
 
     private FragmentLoginBinding mBinding;
+
+    private GestureDetector mGestureDetector;
 
     private String[] lvs = {"List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04"};
 
@@ -55,8 +62,13 @@ public class LoginTabOneFragment extends BaseFragment {
     }
 
     @Override
-    protected void rxBusEventProcess(@NonNull Events<?> events) throws Exception {
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == ContextMenu.FIRST + 1) {
 
+            AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            RxBus.getInstance().send(Events.EVENT_TAP, item.getTitle().toString() + menuInfo.position);
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void initRecyclerView(RecyclerView recyclerView) {
@@ -66,6 +78,16 @@ public class LoginTabOneFragment extends BaseFragment {
             l.add(s);
         }
 
+        // 可以不写
+        // registerForContextMenu(recyclerView);
+        //设置菜单弹出事件
+        recyclerView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                menu.add(0, ContextMenu.FIRST+1, 0, "删除");
+            }
+        });
+
         RecyclerViewAdapter recycleAdapter = new RecyclerViewAdapter<String>(l) {
 
             @Override
@@ -74,16 +96,34 @@ public class LoginTabOneFragment extends BaseFragment {
             }
 
             @Override
-            public void convert(RecyclerViewAdapter.RecycleViewHolder holder, String data, int position) {
-                final Drawable recycleViewNormal = ContextCompat.getDrawable(getContext(), R.drawable.recycle_view_normal);
-                final Drawable recycleViewPressed = ContextCompat.getDrawable(getContext(), R.drawable.recycle_view_pressed);
+            public int getPopupId(int viewType) {
+                return R.layout.layout_popwindow_recyclerview;
+            }
+
+            @Override
+            public void convert(final RecyclerViewAdapter.RecycleViewHolder holder, String data, int position) {
+
+                final Drawable recycleViewNormal = util.getDrawable(R.drawable.recycle_view_normal);
+                final Drawable recycleViewPressed = util.getDrawable(R.drawable.recycle_view_pressed);
                 holder.setText(R.id.id_num, data);
+
+                mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public void onLongPress(MotionEvent e) {
+                        int x = (int)e.getRawX();
+                        int y = (int)e.getRawY();
+                        Toast.makeText(getContext(), "x:" + x+ " y:" + y, Toast.LENGTH_SHORT).show();
+
+                        holder.getPopUpView().showAsDropDown(holder.itemView, x-300, y-300);
+                    }
+                });
+
                 holder.itemView.setOnTouchListener(new View.OnTouchListener() {
                     private float pointerX = 0;
                     private float pointerY = 0;
+
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-
                         if(event.getAction() == MotionEvent.ACTION_UP){
                             v.setBackground(recycleViewNormal);
                         }
@@ -99,7 +139,8 @@ public class LoginTabOneFragment extends BaseFragment {
                                 v.setBackground(recycleViewNormal);
                             }
                         }
-                        return false;
+                        mGestureDetector.onTouchEvent(event);
+                        return true;
                     }
                 });
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -115,9 +156,10 @@ public class LoginTabOneFragment extends BaseFragment {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), tv.getText(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), tv.getText(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
         };
 

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.crm.userapplication.rxbus.Events;
 import com.crm.userapplication.rxbus.RxBus;
+import com.crm.userapplication.util.ZUtil;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,23 +19,16 @@ import io.reactivex.schedulers.Schedulers;
  */
 public abstract class BaseFragment extends RxFragment {
 
+    protected ZUtil util;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // RxBus
-        RxBus.getInstance().getBus()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(this.<Events<?>>bindToLifecycle())
-                .subscribe(new Consumer<Events<?>>() {
-                    @Override
-                    public void accept(@NonNull Events<?> events) throws Exception {
-                        rxBusEventProcess(events);
-                    }
-                });
+
+        // ZUtil
+        this.util = ZUtil.getInstance();
+        this.util.setContext(getContext());
 
     }
-
-    protected abstract void rxBusEventProcess(@NonNull Events<?> events) throws Exception;
 
 }

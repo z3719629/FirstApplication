@@ -37,7 +37,9 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
 
     @Override
     protected void rxBusEventProcess(@NonNull Events<?> events) throws Exception {
-
+        if(events.getCode() == Events.EVENT_TAP) {
+            Toast.makeText(LoginActivity.this, events.getContent().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -161,25 +163,10 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
 
         });
 
+        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("one"));
+        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("two"));
+        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("three"));
+        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("four"));
         mTablayout.setupWithViewPager(mViewPager);
-
-        Tab one = mTablayout.getTabAt(0);
-        Tab two = mTablayout.getTabAt(1);
-        Tab three = mTablayout.getTabAt(2);
-        Tab four = mTablayout.getTabAt(3);
-
-        if (one != null) {
-            one.setIcon(getResources().getDrawable(R.mipmap.ic_launcher));
-        }
-        if (two != null) {
-            two.setIcon(getResources().getDrawable(R.mipmap.ic_launcher));
-        }
-        if (three != null) {
-            three.setIcon(getResources().getDrawable(R.mipmap.ic_launcher));
-        }
-        if (four != null) {
-            four.setIcon(getResources().getDrawable(R.mipmap.ic_launcher));
-        }
-
     }
 }
