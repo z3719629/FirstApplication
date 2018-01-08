@@ -24,7 +24,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#c25757"
+            android:background="#eae9e9"
             app:tabGravity="fill"
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"

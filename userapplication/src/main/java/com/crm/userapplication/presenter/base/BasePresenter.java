@@ -1,12 +1,12 @@
 package com.crm.userapplication.presenter.base;
 
 
-import com.crm.userapplication.activity.base.IBaseView;
+import com.crm.userapplication.contract.BaseContract;
 
 /**
  * Created by Administrator on 2017/12/29.
  */
-public class BasePresenter<T extends IBaseView> implements IBasePresenter {
+public class BasePresenter<T> implements BaseContract.IBasePresenter {
 
     protected T iView;
 
@@ -15,7 +15,7 @@ public class BasePresenter<T extends IBaseView> implements IBasePresenter {
     }
 
     @Override
-    public IBasePresenter getP() {
+    public BaseContract.IBasePresenter getP() {
         return this;
     }
 }

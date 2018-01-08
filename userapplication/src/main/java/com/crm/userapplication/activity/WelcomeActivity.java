@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.crm.userapplication.R;
 import com.crm.userapplication.activity.base.BaseActivity;
+import com.crm.userapplication.contract.BaseContract;
 import com.crm.userapplication.databinding.ActivityWelcomeBinding;
-import com.crm.userapplication.presenter.base.IBasePresenter;
 import com.crm.userapplication.rxbus.Events;
 import com.crm.userapplication.rxbus.RxBus;
 
@@ -61,7 +61,7 @@ public class WelcomeActivity extends BaseActivity {
 
                     if(progressBar.getProgress() == progressBar.getMax()) {
                         flag = false;
-                        RxBus.getInstance().send(Events.EVENT_JUMP, "");
+                        RxBus.getInstance().send(WelcomeActivity.this, Events.EVENT_JUMP, "");
                     }
                 }
 
@@ -76,7 +76,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
-    protected IBasePresenter getP() {
+    protected BaseContract.IBasePresenter getP() {
         return null;
     }
 

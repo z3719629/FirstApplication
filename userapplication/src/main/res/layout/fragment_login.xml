@@ -6,15 +6,16 @@
             type="com.crm.userapplication.model.MLogin" />
     </data>
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.crm.userapplication.fragment.LoginTabOneFragment">
 
-        <com.crm.userapplication.view.RecyclerViewImplementsContextMenu
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recycler_view" />
 
-    </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

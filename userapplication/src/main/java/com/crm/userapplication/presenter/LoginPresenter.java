@@ -19,11 +19,11 @@ public class LoginPresenter extends BasePresenter<LoginContract.ILoginView> impl
 
     @Override
     public void processLogin(String userName, String userPassword) throws DbException {
-        RxBus.getInstance().send(Events.EVENT_TAP, "用户名：" + userName + " 密码：" + userPassword);
+        RxBus.getInstance().send(this, Events.EVENT_TAP, "用户名：" + userName + " 密码：" + userPassword);
         if(this.doProcessLogin(userName, userPassword)) {
-            RxBus.getInstance().send(Events.EVENT_TAP, "登录成功");
+            RxBus.getInstance().send(this, Events.EVENT_TAP, "登录成功");
         } else {
-            RxBus.getInstance().send(Events.EVENT_TAP, "登录失败");
+            RxBus.getInstance().send(this, Events.EVENT_TAP, "登录失败");
         }
     }
 

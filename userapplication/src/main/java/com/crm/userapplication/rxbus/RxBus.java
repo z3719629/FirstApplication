@@ -1,5 +1,12 @@
 package com.crm.userapplication.rxbus;
 
+import android.util.Log;
+
+import com.crm.userapplication.contract.BaseContract;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -10,7 +17,7 @@ import io.reactivex.subjects.Subject;
 public class RxBus {
 
     private static volatile RxBus rxBus;
-    private final Subject<Events<?>> _bus = PublishSubject.<Events<?>>create().toSerialized();
+    private final Subject<Events<BaseContract.BaseInterface>> _bus = PublishSubject.<Events<BaseContract.BaseInterface>>create().toSerialized();
 
     private RxBus(){}
 
@@ -25,18 +32,22 @@ public class RxBus {
         return rxBus;
     }
 
-    public void send(Events<?> o) {
+    public void send(Events<BaseContract.BaseInterface> o) {
+        Log.i("DDDDDDDDDDDD", "onNext");
         _bus.onNext(o);
     }
 
-    public void send(@Events.EventCode int code, Object content){
-        Events<Object> event = new Events<>();
+    public void send(BaseContract.BaseInterface target, @Events.EventCode int code, Object content){
+        Map<String, Object> map = new ConcurrentHashMap();
+        Events<BaseContract.BaseInterface> event = new Events<>();
         event.code = code;
-        event.content = content;
+        map.put("content", content);
+        event.setContent(map);
+        event.setTarget(target);
         send(event);
     }
 
-    public Subject<Events<?>> getBus() {
+    public Subject<Events<BaseContract.BaseInterface>> getBus() {
         return _bus;
     }
 

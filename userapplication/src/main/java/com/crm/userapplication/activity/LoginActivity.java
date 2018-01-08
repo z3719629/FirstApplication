@@ -1,7 +1,14 @@
 package com.crm.userapplication.activity;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -13,9 +20,11 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crm.userapplication.R;
@@ -25,6 +34,7 @@ import com.crm.userapplication.databinding.ActivityLoginBinding;
 import com.crm.userapplication.fragment.LoginTabOneFragment;
 import com.crm.userapplication.presenter.LoginPresenter;
 import com.crm.userapplication.rxbus.Events;
+import com.crm.userapplication.view.ChangeColorIconWithTextView;
 
 import org.xutils.ex.DbException;
 
@@ -133,7 +143,7 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
         });
     }
 
-    private void initViews(TabLayout mTablayout, ViewPager mViewPager) {
+    private void initViews(final TabLayout mTablayout, final ViewPager mViewPager) {
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -163,10 +173,107 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
 
         });
 
-        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("one"));
-        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("two"));
-        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("three"));
-        mTablayout.addTab(mTablayout.newTab().setIcon(util.getDrawable(R.mipmap.ic_launcher)).setText("four"));
+        mViewPager.setCurrentItem(0);
+
         mTablayout.setupWithViewPager(mViewPager);
+
+        Tab one = mTablayout.getTabAt(0);
+        Tab two = mTablayout.getTabAt(1);
+        Tab three = mTablayout.getTabAt(2);
+        Tab four = mTablayout.getTabAt(3);
+
+        if (one != null) {
+            //one.setIcon(util.getDrawable(R.mipmap.ic_launcher));
+            View view= LayoutInflater.from(this).inflate(R.layout.tab_one, null);
+            ChangeColorIconWithTextView tv = (ChangeColorIconWithTextView) view.findViewById(R.id.id_indicator_four);
+            //tv.setBackgroundResource(R.drawable.tab_select);
+            one.setCustomView(tv);
+            tv.setIconAlpha(1.0f);
+        }
+        if (two != null) {
+            View view= LayoutInflater.from(this).inflate(R.layout.tab_one, null);
+            ChangeColorIconWithTextView tv = (ChangeColorIconWithTextView) view.findViewById(R.id.id_indicator_four);
+            //tv.setBackgroundResource(R.drawable.tab_select);
+            two.setCustomView(tv);
+            tv.setIconAlpha(0.0f);
+        }
+        if (three != null) {
+            View view= LayoutInflater.from(this).inflate(R.layout.tab_one, null);
+            ChangeColorIconWithTextView tv = (ChangeColorIconWithTextView) view.findViewById(R.id.id_indicator_four);
+            //tv.setBackgroundResource(R.drawable.tab_select);
+            three.setCustomView(tv);
+            tv.setIconAlpha(0.0f);
+        }
+        if (four != null) {
+            View view= LayoutInflater.from(this).inflate(R.layout.tab_one, null);
+            ChangeColorIconWithTextView tv = (ChangeColorIconWithTextView) view.findViewById(R.id.id_indicator_four);
+            //tv.setBackgroundResource(R.drawable.tab_select);
+            four.setCustomView(tv);
+            tv.setIconAlpha(0.0f);
+        }
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (positionOffset > 0)
+                {
+                    ChangeColorIconWithTextView left = (ChangeColorIconWithTextView)mTablayout.getTabAt(position).getCustomView();
+                    ChangeColorIconWithTextView right = (ChangeColorIconWithTextView)mTablayout.getTabAt(position+1).getCustomView();
+
+                    left.setIconAlpha(1 - positionOffset);
+                    right.setIconAlpha(positionOffset);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //tab.getCustomView().findViewById(R.id.id_indicator_four).setSelected(true);
+                ((ChangeColorIconWithTextView)tab.getCustomView().findViewById(R.id.id_indicator_four)).setIconAlpha(1.0f);
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //tab.getCustomView().findViewById(R.id.id_indicator_four).setSelected(false);
+                ((ChangeColorIconWithTextView)tab.getCustomView().findViewById(R.id.id_indicator_four)).setIconAlpha(0.0f);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+        });
+
+    }
+
+    private Bitmap setBitMap(int alpha) {
+        Bitmap mBitmap = Bitmap.createBitmap(100, 100,
+                Bitmap.Config.ARGB_8888);
+        Canvas mCanvas = new Canvas(mBitmap);
+        Paint mPaint = new Paint();
+        mPaint.setColor(Color.GREEN);
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setAlpha(alpha);
+        Rect mIconRect = new Rect(0, 0, 100, 100);
+        mCanvas.drawRect(mIconRect, mPaint);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mPaint.setAlpha(255);
+        Bitmap mIconBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.back);
+        mCanvas.drawBitmap(mIconBitmap, null, mIconRect, mPaint);
+
+        return mBitmap;
     }
 }

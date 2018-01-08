@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tabAttr="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <com.crm.userapplication.view.ChangeColorIconWithTextView
+        android:id="@+id/id_indicator_four"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        tabAttr:icon="@drawable/back"
+        tabAttr:text="hello"
+        tabAttr:text_size="15sp"
+        tabAttr:text_color="@color/colorTabText"
+        tabAttr:color="@color/colorTabSelect"
+    />
+
+</RelativeLayout>

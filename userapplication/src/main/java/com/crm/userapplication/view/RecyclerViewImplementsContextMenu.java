@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 
+// 用来显示长按菜单
 public class RecyclerViewImplementsContextMenu extends RecyclerView {
     private AdapterView.AdapterContextMenuInfo contextMenuInfo;
     public RecyclerViewImplementsContextMenu(Context context) {

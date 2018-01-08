@@ -3,7 +3,7 @@ package com.crm.userapplication.activity.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.crm.userapplication.presenter.base.IBasePresenter;
+import com.crm.userapplication.contract.BaseContract;
 import com.crm.userapplication.rxbus.Events;
 import com.crm.userapplication.rxbus.RxBus;
 import com.crm.userapplication.sqllite.DBManager;
@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Administrator on 2017/12/28.
  */
-public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompatActivity implements IBaseView {
+public abstract class BaseActivity<T extends BaseContract.IBasePresenter> extends RxAppCompatActivity implements BaseContract.IBaseView {
 
     protected ZUtil util;
 
