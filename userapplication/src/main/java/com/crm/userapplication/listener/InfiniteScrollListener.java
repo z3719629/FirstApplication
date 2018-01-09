@@ -3,11 +3,12 @@ package com.crm.userapplication.listener;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListener {
 
     // 底部还剩下几个的时候开始触发加载更多的回调接口
-    private static final int VISIBLE_THRESHOLD = 3;
+    private static final int VISIBLE_THRESHOLD = 1;
 
     private final LinearLayoutManager layoutManager;
     private final DataLoadingSubject dataLoading;
@@ -27,10 +28,16 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
         final int totalItemCount = layoutManager.getItemCount();
         final int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
+        Log.i("TTTTTTTTTTTTT", "visibleItemCount : " + visibleItemCount);
+        Log.i("TTTTTTTTTTTTT", "totalItemCount : " + totalItemCount);
+        Log.i("TTTTTTTTTTTTT", "firstVisibleItem : " + firstVisibleItem);
+
         if ((totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_THRESHOLD)) {
             onLoadMore();
         }
     }
+
+
 
     public abstract void onLoadMore();
 

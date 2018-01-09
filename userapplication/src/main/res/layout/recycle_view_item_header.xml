@@ -13,18 +13,16 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/footerProgressBar"
+        android:id="@+id/headerProgressBar"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="97dp" />
+        android:layout_centerHorizontal="true" />
     <TextView
-        android:id="@+id/textViewFooter"
+        android:id="@+id/textViewHeader"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="11111111111"
         android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/footerProgressBar"
-        android:layout_alignBottom="@+id/footerProgressBar" />
+        android:layout_below="@+id/headerProgressBar"
+        android:layout_alignStart="@+id/headerProgressBar" />
 
 </RelativeLayout>

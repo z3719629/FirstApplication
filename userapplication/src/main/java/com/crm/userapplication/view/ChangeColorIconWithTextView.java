@@ -127,7 +127,6 @@ public class ChangeColorIconWithTextView extends View {
     @Override
     protected void onDraw(Canvas canvas)
     {
-
         int alpha = (int) Math.ceil((255 * mAlpha));
         canvas.drawBitmap(mIconBitmap, null, mIconRect, null);
         setupTargetBitmap(alpha);
