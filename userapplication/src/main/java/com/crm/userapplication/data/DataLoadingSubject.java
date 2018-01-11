@@ -1,4 +1,4 @@
-package com.crm.userapplication.listener;
+package com.crm.userapplication.data;
 
 /**
  * Created by Administrator on 2018/1/8.
@@ -6,7 +6,7 @@ package com.crm.userapplication.listener;
 public interface DataLoadingSubject {
     boolean isDataLoading();
     void registerCallback(DataLoadingCallbacks callBack);
-    void unregistereCallBack(DataLoadingCallbacks callBack);
+    void unregisterCallBack(DataLoadingCallbacks callBack);
     interface DataLoadingCallbacks{
         void dataStartedLoading();
         void dataFinishedLoading();

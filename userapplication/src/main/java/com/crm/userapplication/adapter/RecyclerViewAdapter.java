@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.crm.userapplication.listener.DataLoadingSubject;
-
 import java.util.List;
 
 /**
@@ -33,6 +31,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
         this.isHaveHeader = isHaveHeader;
         this.isHaveFooter = isHaveFooter;
         this.mDatas = datas;
+        notifyItemRangeChanged(0, this.mDatas.size());
     }
 
     public boolean isHaveHeader() {

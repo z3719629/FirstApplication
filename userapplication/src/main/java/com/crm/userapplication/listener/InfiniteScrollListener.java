@@ -3,7 +3,8 @@ package com.crm.userapplication.listener;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
+import com.crm.userapplication.data.DataLoadingSubject;
 
 public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListener {
 
@@ -28,17 +29,11 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
         final int totalItemCount = layoutManager.getItemCount();
         final int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
-        Log.i("TTTTTTTTTTTTT", "visibleItemCount : " + visibleItemCount);
-        Log.i("TTTTTTTTTTTTT", "totalItemCount : " + totalItemCount);
-        Log.i("TTTTTTTTTTTTT", "firstVisibleItem : " + firstVisibleItem);
-
         if ((totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_THRESHOLD)) {
-            onLoadMore();
+            onLoadMore(dataLoading);
         }
     }
 
-
-
-    public abstract void onLoadMore();
+    public abstract void onLoadMore(DataLoadingSubject dataLoadingSubject);
 
 }

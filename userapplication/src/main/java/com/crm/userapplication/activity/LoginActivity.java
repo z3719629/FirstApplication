@@ -1,14 +1,8 @@
 package com.crm.userapplication.activity;
 
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -20,11 +14,14 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.crm.userapplication.R;
@@ -32,8 +29,12 @@ import com.crm.userapplication.activity.base.BaseActivity;
 import com.crm.userapplication.contract.LoginContract;
 import com.crm.userapplication.databinding.ActivityLoginBinding;
 import com.crm.userapplication.fragment.LoginTabOneFragment;
+import com.crm.userapplication.listener.BaseOnTouchListener;
+import com.crm.userapplication.listener.RecyclerViewItemOnTouchListener;
+import com.crm.userapplication.listener.TabItemOnTouchListener;
 import com.crm.userapplication.presenter.LoginPresenter;
 import com.crm.userapplication.rxbus.Events;
+import com.crm.userapplication.util.ZUtil;
 import com.crm.userapplication.view.ChangeColorIconWithTextView;
 
 import org.xutils.ex.DbException;
@@ -177,6 +178,7 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
 
         mTablayout.setupWithViewPager(mViewPager);
 
+
         Tab one = mTablayout.getTabAt(0);
         Tab two = mTablayout.getTabAt(1);
         Tab three = mTablayout.getTabAt(2);
@@ -189,6 +191,8 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
             //tv.setBackgroundResource(R.drawable.tab_select);
             one.setCustomView(tv);
             tv.setIconAlpha(1.0f);
+
+            tv.setOnTouchListener(new TabItemOnTouchListener(this, mViewPager, one));
         }
         if (two != null) {
             View view= LayoutInflater.from(this).inflate(R.layout.tab_one, null);
@@ -196,6 +200,8 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
             //tv.setBackgroundResource(R.drawable.tab_select);
             two.setCustomView(tv);
             tv.setIconAlpha(0.0f);
+
+            tv.setOnTouchListener(new TabItemOnTouchListener(this, mViewPager, two));
         }
         if (three != null) {
             View view= LayoutInflater.from(this).inflate(R.layout.tab_one, null);
@@ -203,6 +209,8 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
             //tv.setBackgroundResource(R.drawable.tab_select);
             three.setCustomView(tv);
             tv.setIconAlpha(0.0f);
+
+            tv.setOnTouchListener(new TabItemOnTouchListener(this, mViewPager, three));
         }
         if (four != null) {
             View view= LayoutInflater.from(this).inflate(R.layout.tab_one, null);
@@ -210,6 +218,8 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
             //tv.setBackgroundResource(R.drawable.tab_select);
             four.setCustomView(tv);
             tv.setIconAlpha(0.0f);
+
+            tv.setOnTouchListener(new TabItemOnTouchListener(this, mViewPager, four));
         }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -220,8 +230,8 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
                     ChangeColorIconWithTextView left = (ChangeColorIconWithTextView)mTablayout.getTabAt(position).getCustomView();
                     ChangeColorIconWithTextView right = (ChangeColorIconWithTextView)mTablayout.getTabAt(position+1).getCustomView();
 
-                    left.setIconAlpha(1 - positionOffset);
-                    right.setIconAlpha(positionOffset);
+                    //left.setIconAlpha(1 - positionOffset);
+                    //right.setIconAlpha(positionOffset);
                 }
             }
 
@@ -241,39 +251,22 @@ public class LoginActivity extends BaseActivity<LoginContract.ILoginPresenter> i
             public void onTabSelected(TabLayout.Tab tab) {
                 //tab.getCustomView().findViewById(R.id.id_indicator_four).setSelected(true);
                 ((ChangeColorIconWithTextView)tab.getCustomView().findViewById(R.id.id_indicator_four)).setIconAlpha(1.0f);
-                mViewPager.setCurrentItem(tab.getPosition());
+                mViewPager.setCurrentItem(tab.getPosition(), false);
+                Log.i("TTTTTTTTTTTTTTTT", "onTabSelected " + tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 //tab.getCustomView().findViewById(R.id.id_indicator_four).setSelected(false);
                 ((ChangeColorIconWithTextView)tab.getCustomView().findViewById(R.id.id_indicator_four)).setIconAlpha(0.0f);
+                Log.i("TTTTTTTTTTTTTTTT", "onTabUnselected " + tab.getPosition());
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
+                mViewPager.setCurrentItem(tab.getPosition(), false);
             }
         });
 
-    }
-
-    private Bitmap setBitMap(int alpha) {
-        Bitmap mBitmap = Bitmap.createBitmap(100, 100,
-                Bitmap.Config.ARGB_8888);
-        Canvas mCanvas = new Canvas(mBitmap);
-        Paint mPaint = new Paint();
-        mPaint.setColor(Color.GREEN);
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setAlpha(alpha);
-        Rect mIconRect = new Rect(0, 0, 100, 100);
-        mCanvas.drawRect(mIconRect, mPaint);
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        mPaint.setAlpha(255);
-        Bitmap mIconBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.back);
-        mCanvas.drawBitmap(mIconBitmap, null, mIconRect, mPaint);
-
-        return mBitmap;
     }
 }

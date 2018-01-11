@@ -1,37 +1,32 @@
 package com.crm.userapplication.fragment;
 
 import android.databinding.DataBindingUtil;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crm.userapplication.R;
+import com.crm.userapplication.activity.LoginActivity;
+import com.crm.userapplication.adapter.PageingViewAdapter;
 import com.crm.userapplication.adapter.RecyclerViewAdapter;
 import com.crm.userapplication.adapter.SimplePaddingDecoration;
 import com.crm.userapplication.contract.BaseContract;
+import com.crm.userapplication.data.BaseDataManager;
+import com.crm.userapplication.data.PagingDataManager;
 import com.crm.userapplication.databinding.FragmentLoginBinding;
-import com.crm.userapplication.listener.DataLoadingSubject;
+import com.crm.userapplication.data.DataLoadingSubject;
 import com.crm.userapplication.listener.InfiniteScrollListener;
 import com.crm.userapplication.rxbus.Events;
 import com.crm.userapplication.rxbus.RxBus;
@@ -48,11 +43,11 @@ public class LoginTabOneFragment extends BaseFragment {
 
     private GestureDetector mGestureDetector;
 
-    private RecyclerViewAdapter mRecycleAdapter;
+    private PageingViewAdapter mRecycleAdapter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private String[] lvs = {"List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04","List Item 01", "List Item 02", "List Item 03", "List Item 04"};
+    private String[] lvs = {"List Item 01", "List Item 02", "List Item 03", "List Item 04"};
 
     @Nullable
     @Override
@@ -97,158 +92,43 @@ public class LoginTabOneFragment extends BaseFragment {
 //            }
 //        });
 
-        mRecycleAdapter = new RecyclerViewAdapter<String>(l, true, true) {
+        mRecycleAdapter = new PageingViewAdapter<String, LoginActivity>((LoginActivity) getActivity(), l, false, true);
+
+        final PagingDataManager mDataManager = new PagingDataManager(getContext()) {
 
             @Override
-            public int getLayoutId(int viewType) {
-                if(viewType == RecyclerViewAdapter.TYPE_BODY) {
-                    return R.layout.recycle_view_item;
-                } else if(viewType == RecyclerViewAdapter.TYPE_FOOTER) {
-                    return R.layout.recycle_view_item_footer;
-                } else if(viewType == RecyclerViewAdapter.TYPE_HEADER){
-                    return R.layout.recycle_view_item_header;
-                } else {
-                    return -1;
-                }
+            protected void loadData(int page) {
+                mRecycleAdapter.dataStartedLoading();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onDataLoaded("aaaaaa");
+                    }
+                }, 2000);
             }
 
             @Override
-            public int getPopupId(int viewType) {
-                return R.layout.layout_popwindow_recyclerview;
-            }
-
-            @Override
-            public void convert(RecyclerView.ViewHolder holderOld, String data, int position) {
-
-                final RecyclerViewAdapter.RecycleViewHolder holder = (RecyclerViewAdapter.RecycleViewHolder)holderOld;
-
-                final Drawable recycleViewNormal = util.getDrawable(R.drawable.recycle_view_normal);
-                final Drawable recycleViewPressed = util.getDrawable(R.drawable.recycle_view_pressed);
-
-                mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
-                    @Override
-                    public void onLongPress(MotionEvent e) {
-                        int x = (int)e.getRawX();
-                        int y = (int)e.getRawY();
-                        Toast.makeText(getContext(), "x:" + x+ " y:" + y, Toast.LENGTH_SHORT).show();
-
-                        holder.getPopUpView().showAsDropDown(holder.itemView, x-300, y-300);
-                    }
-
-
-                });
-
-                holder.itemView.setOnTouchListener(new View.OnTouchListener() {
-                    private float pointerX = 0;
-                    private float pointerY = 0;
-
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if(event.getAction() == MotionEvent.ACTION_UP){
-                            v.setBackground(recycleViewNormal);
-                            Log.i("TTTTTTTTTTTTTT", "ACTION_UP");
-                        } else if(event.getAction() == MotionEvent.ACTION_CANCEL){
-                            v.setBackground(recycleViewNormal);
-                            Log.i("TTTTTTTTTTTTTT", "ACTION_CANCEL");
-                        } else if(event.getAction() == MotionEvent.ACTION_DOWN){
-
-                            pointerX = MotionEventCompat.getAxisValue(event, MotionEventCompat.AXIS_X);
-                            pointerY = MotionEventCompat.getAxisValue(event, MotionEventCompat.AXIS_Y);
-                            //v.setBackground(recycleViewPressed);
-                            Log.i("TTTTTTTTTTTTTT", "ACTION_DOWN");
-
-                        } else if(event.getAction() == MotionEvent.ACTION_MOVE){
-                            float pointerXTmp = MotionEventCompat.getAxisValue(event, MotionEventCompat.AXIS_X);
-                            float pointerYTmp = MotionEventCompat.getAxisValue(event, MotionEventCompat.AXIS_Y);
-                            if (pointerXTmp != pointerX || pointerYTmp != pointerY) {
-                                v.setBackground(recycleViewNormal);
-                                Log.i("TTTTTTTTTTTTTT", "ACTION_MOVE");
-                            } else {
-                                v.setBackground(recycleViewPressed);
-                            }
-                        }
-
-                        mGestureDetector.onTouchEvent(event);
-                        return true;
-                    }
-                });
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //View view = ((ViewGroup)v).getChildAt(1);
-                        //Toast.makeText(getActivity(), ((TextView)view).getText(), Toast.LENGTH_SHORT).show();
-                        //v.setBackgroundColor(Color.parseColor("#000000"));
-                    }
-                });
-
-                if(holder.getViewType() == RecyclerViewAdapter.TYPE_BODY) {
-                    holder.setText(R.id.id_num, data);
-                    Button b = holder.getView(R.id.recycler_view_button);
-                    final TextView tv = holder.getView(R.id.id_num);
-                    b.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(getContext(), tv.getText(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else if(holder.getViewType() == RecyclerViewAdapter.TYPE_FOOTER) {
-                    final TextView tv = holder.getView(R.id.textViewFooter);
-                    tv.setText("无法加载更多");
-
-                    // 刷新太快 所以使用Hanlder延迟两秒
-//                    Handler handler = new Handler();
-//                    handler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            holder.getP().getmDatas().add("234");
-//                            notifyDataSetChanged();
-//                        }
-//                    }, 2000);
-                } else if(holder.getViewType() == RecyclerViewAdapter.TYPE_HEADER) {
-                    final TextView tv = holder.getView(R.id.textViewHeader);
-                    tv.setText("Header");
-                    //final ProgressBar progressBar = holder.getView(R.id.headerProgressBar);
-
-                }
-
+            public void onDataLoaded(Object data) {
+                mRecycleAdapter.getmDatas().add(data);
+                mRecycleAdapter.dataFinishedLoading();
+                super.onDataLoaded(data);
             }
         };
 
-        DataLoadingSubject mDataManager = new DataLoadingSubject() {
+        mDataManager.registerCallback(mRecycleAdapter);
 
-            @Override
-            public boolean isDataLoading() {
-                return false;
-            }
-
-            @Override
-            public void registerCallback(DataLoadingCallbacks callBack) {
-
-            }
-
-            @Override
-            public void unregistereCallBack(DataLoadingCallbacks callBack) {
-
-            }
-        };
-
-        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //设置布局管理器
         recyclerView.setLayoutManager(layoutManager);
         //设置为垂直布局，这也是默认的
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if(mRecycleAdapter.isHaveHeader() && position == 0) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        });
 
-        layoutManager.scrollToPositionWithOffset(1, 0);
+        if(mRecycleAdapter.isHaveHeader()) {
+            // 滚动到1位置
+            layoutManager.scrollToPositionWithOffset(1, 0);
+        }
+
         //layoutManager.setStackFromEnd(true);
         //设置分隔线
         //recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
@@ -262,16 +142,8 @@ public class LoginTabOneFragment extends BaseFragment {
 
         recyclerView.addOnScrollListener(new InfiniteScrollListener(layoutManager, mDataManager) {
             @Override
-            public void onLoadMore() {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRecycleAdapter.getmDatas().add("aaaaaaa");
-                        mRecycleAdapter.notifyDataSetChanged();
-                    }
-                }, 2000);
-
+            public void onLoadMore(DataLoadingSubject dataLoadingSubject) {
+                mDataManager.loadData();
             }
         });
     }
@@ -285,7 +157,6 @@ public class LoginTabOneFragment extends BaseFragment {
             }
         });
     }
-
 
     @Override
     protected void rxBusEventProcess(Events events) {
