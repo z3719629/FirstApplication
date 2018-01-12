@@ -66,6 +66,7 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
                 // 弹框左上角显示在触摸点，偏移x 50 y 50
                 // 根据位置判断显示位置 TODO
                 holder.getPopUpView().showAsDropDown(holder.itemView, x + 50, y + 50 - holder.itemView.getHeight());
+                holder.getPopUpView().setAnimationStyle(R.style.windowAnimBottom);
                 LinearLayout linearLayout = (LinearLayout)holder.getPopUpView().getContentView();
                 for(int i=0; i<linearLayout.getChildCount(); i++) {
                     View v = linearLayout.getChildAt(i);
