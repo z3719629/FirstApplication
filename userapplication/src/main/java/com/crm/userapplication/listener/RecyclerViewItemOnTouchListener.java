@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * Created by Administrator on 2018/1/10.
  */
-public abstract class RecyclerViewItemOnTouchListener extends BaseOnTouchListener {
+public class RecyclerViewItemOnTouchListener extends BaseOnTouchListener {
 
     private Drawable normal;
     private Drawable pressed;

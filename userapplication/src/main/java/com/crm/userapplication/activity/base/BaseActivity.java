@@ -1,6 +1,8 @@
 package com.crm.userapplication.activity.base;
 
+import android.app.Service;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 
 import com.crm.userapplication.contract.BaseContract;
@@ -25,6 +27,8 @@ public abstract class BaseActivity<T extends BaseContract.IBasePresenter> extend
     protected ZUtil util;
 
     protected T presenter;
+
+    protected Vibrator mVibrator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +60,9 @@ public abstract class BaseActivity<T extends BaseContract.IBasePresenter> extend
             e.printStackTrace();
         }
 
+        // 震动
+        mVibrator = (Vibrator)getApplication().getSystemService(Service.VIBRATOR_SERVICE);
+
     }
 
     protected abstract void rxBusEventProcess(@NonNull Events<?> events) throws Exception;
@@ -64,4 +71,7 @@ public abstract class BaseActivity<T extends BaseContract.IBasePresenter> extend
 
     protected abstract T getP();
 
+    public Vibrator getmVibrator() {
+        return mVibrator;
+    }
 }

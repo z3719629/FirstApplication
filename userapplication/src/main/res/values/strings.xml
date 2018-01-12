@@ -4,5 +4,5 @@
     <string name="action_settings">Settings</string>
 
     <drawable name="recycle_view_normal">#fafafa</drawable>
-    <drawable name="recycle_view_pressed">#aba3a0</drawable>
+    <drawable name="recycle_view_pressed">#b9b5b5</drawable>
 </resources>

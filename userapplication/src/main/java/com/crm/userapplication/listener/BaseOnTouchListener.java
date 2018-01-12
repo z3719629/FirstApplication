@@ -58,8 +58,10 @@ public class BaseOnTouchListener implements View.OnTouchListener {
         }
 
         mGestureDetector.onTouchEvent(event);
-        return true;
+        return doOnTouch(v, event);
     }
+
+    protected boolean doOnTouch(View v, MotionEvent event) { return true;}
 
     /**
      * 手指抬起（有时候不触发）

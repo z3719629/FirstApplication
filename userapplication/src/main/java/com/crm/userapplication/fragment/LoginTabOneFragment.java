@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +19,8 @@ import android.widget.AdapterView;
 import com.crm.userapplication.R;
 import com.crm.userapplication.activity.LoginActivity;
 import com.crm.userapplication.adapter.PageingViewAdapter;
-import com.crm.userapplication.adapter.RecyclerViewAdapter;
 import com.crm.userapplication.adapter.SimplePaddingDecoration;
 import com.crm.userapplication.contract.BaseContract;
-import com.crm.userapplication.data.BaseDataManager;
 import com.crm.userapplication.data.PagingDataManager;
 import com.crm.userapplication.databinding.FragmentLoginBinding;
 import com.crm.userapplication.data.DataLoadingSubject;
@@ -41,9 +38,7 @@ public class LoginTabOneFragment extends BaseFragment {
 
     private FragmentLoginBinding mBinding;
 
-    private GestureDetector mGestureDetector;
-
-    private PageingViewAdapter mRecycleAdapter;
+    private PageingViewAdapter<String, LoginActivity> mRecycleAdapter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -110,8 +105,7 @@ public class LoginTabOneFragment extends BaseFragment {
 
             @Override
             public void onDataLoaded(Object data) {
-                mRecycleAdapter.getmDatas().add(data);
-                mRecycleAdapter.dataFinishedLoading();
+                mRecycleAdapter.insertData((String)data);
                 super.onDataLoaded(data);
             }
         };
@@ -164,7 +158,7 @@ public class LoginTabOneFragment extends BaseFragment {
             return;
         }
         if(events.getCode() == Events.EVENT_UPDATE_WIDGET) {
-            mRecycleAdapter.notifyDataSetChanged();
+            mRecycleAdapter.insertData("hello");
             this.mSwipeRefreshLayout.setRefreshing(false);
         }
     }

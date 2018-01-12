@@ -5,35 +5,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f9f3f3">
-        <LinearLayout
+        <RelativeLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content"
+            android:id="@+id/popup_window_menu1">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="菜单一"
+                    android:text="删除"
                     android:id="@+id/popupTextView1"
-                    android:layout_margin="10dp" />
+                    android:layout_margin="20dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/popup_window_menu2">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="菜单二sdfsdf"
-                    android:layout_margin="10dp"
+                    android:text="添加到末尾"
+                    android:layout_margin="20dp"
                     android:id="@+id/popupTextView2"/>
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/popup_window_menu3">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="菜单三sdfd"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:id="@+id/popupTextView3"/>
-        </LinearLayout>
+        </RelativeLayout>
 
 </LinearLayout>

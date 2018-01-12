@@ -1,13 +1,17 @@
 package com.crm.userapplication.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.crm.userapplication.listener.RecyclerViewItemOnTouchListener;
 
 import java.util.List;
 
@@ -19,9 +23,9 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
     public static final int TYPE_BODY = 0;
     public static final int TYPE_FOOTER = 1;
 
-    private List<T> mDatas;
-    private boolean isHaveHeader;
-    private boolean isHaveFooter;
+    protected List<T> mDatas;
+    protected boolean isHaveHeader;
+    protected boolean isHaveFooter;
 
     public List<T> getmDatas() {
         return mDatas;
@@ -132,8 +136,10 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
 
             if(popView != null) {
                 popupView = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                popupView.setBackgroundDrawable(new BitmapDrawable());
                 popupView.setTouchable(true);
                 popupView.setOutsideTouchable(true);
+
             }
 
         }
