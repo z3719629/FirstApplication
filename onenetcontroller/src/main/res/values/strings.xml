@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OneNetController</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <drawable name="recycle_view_normal">#fafafa</drawable>
+    <drawable name="recycle_view_pressed">#b9b5b5</drawable>
+</resources>
