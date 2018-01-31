@@ -2,7 +2,6 @@ package com.crm.userapplication.activity;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -18,23 +17,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.crm.userapplication.R;
-import com.crm.userapplication.activity.base.BaseActivity;
+import com.crm.mylibrary.activity.base.BaseActivity;
 import com.crm.userapplication.contract.LoginContract;
 import com.crm.userapplication.databinding.ActivityLoginBinding;
 import com.crm.userapplication.fragment.LoginTabOneFragment;
-import com.crm.userapplication.listener.BaseOnTouchListener;
-import com.crm.userapplication.listener.RecyclerViewItemOnTouchListener;
 import com.crm.userapplication.listener.TabItemOnTouchListener;
 import com.crm.userapplication.presenter.LoginPresenter;
-import com.crm.userapplication.rxbus.Events;
-import com.crm.userapplication.util.ZUtil;
+import com.crm.mylibrary.rxbus.Events;
 import com.crm.userapplication.view.ChangeColorIconWithTextView;
 
 import org.xutils.ex.DbException;

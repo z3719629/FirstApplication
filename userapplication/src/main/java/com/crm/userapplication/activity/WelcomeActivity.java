@@ -10,11 +10,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.crm.userapplication.R;
-import com.crm.userapplication.activity.base.BaseActivity;
-import com.crm.userapplication.contract.BaseContract;
+import com.crm.mylibrary.activity.base.BaseActivity;
+import com.crm.mylibrary.contract.BaseContract;
 import com.crm.userapplication.databinding.ActivityWelcomeBinding;
-import com.crm.userapplication.rxbus.Events;
-import com.crm.userapplication.rxbus.RxBus;
+import com.crm.mylibrary.rxbus.Events;
+import com.crm.mylibrary.rxbus.RxBus;
 
 import org.xutils.ex.DbException;
 

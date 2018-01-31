@@ -16,17 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.crm.mylibrary.adapter.SimplePaddingDecoration;
+import com.crm.mylibrary.fragment.base.BaseFragment;
+import com.crm.mylibrary.listener.InfiniteScrollListener;
 import com.crm.userapplication.R;
 import com.crm.userapplication.activity.LoginActivity;
 import com.crm.userapplication.adapter.PageingViewAdapter;
-import com.crm.userapplication.adapter.SimplePaddingDecoration;
-import com.crm.userapplication.contract.BaseContract;
+import com.crm.mylibrary.contract.BaseContract;
 import com.crm.userapplication.data.PagingDataManager;
 import com.crm.userapplication.databinding.FragmentLoginBinding;
-import com.crm.userapplication.data.DataLoadingSubject;
-import com.crm.userapplication.listener.InfiniteScrollListener;
-import com.crm.userapplication.rxbus.Events;
-import com.crm.userapplication.rxbus.RxBus;
+import com.crm.mylibrary.rxbus.Events;
+import com.crm.mylibrary.rxbus.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,8 +135,9 @@ public class LoginTabOneFragment extends BaseFragment {
         recyclerView.addItemDecoration(new SimplePaddingDecoration(getActivity()));
 
         recyclerView.addOnScrollListener(new InfiniteScrollListener(layoutManager, mDataManager) {
+
             @Override
-            public void onLoadMore(DataLoadingSubject dataLoadingSubject) {
+            public void onLoadMore(com.crm.mylibrary.data.DataLoadingSubject dataLoadingSubject) {
                 mDataManager.loadData();
             }
         });
@@ -169,6 +170,7 @@ public class LoginTabOneFragment extends BaseFragment {
             return;
         }
         if(events.getCode() == Events.EVENT_UPDATE_WIDGET) {
+            // 延时
             Thread.sleep((int)events.getContent().get("content"));
         }
     }

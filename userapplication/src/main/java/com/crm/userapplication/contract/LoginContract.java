@@ -1,6 +1,8 @@
 package com.crm.userapplication.contract;
 
 
+import com.crm.mylibrary.contract.BaseContract;
+
 import org.xutils.ex.DbException;
 
 /**

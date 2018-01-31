@@ -1,21 +1,21 @@
 package com.crm.userapplication.adapter;
 
 import android.graphics.drawable.Drawable;
-import android.media.AudioAttributes;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crm.mylibrary.adapter.RecyclerViewAdapter;
+import com.crm.mylibrary.adapter.RecyclerViewOperateHolder;
+import com.crm.mylibrary.data.DataLoadingSubject;
+import com.crm.mylibrary.listener.RecyclerViewItemOnTouchListener;
 import com.crm.userapplication.R;
-import com.crm.userapplication.activity.base.BaseActivity;
-import com.crm.userapplication.data.DataLoadingSubject;
-import com.crm.userapplication.listener.RecyclerViewItemOnTouchListener;
-import com.crm.userapplication.util.ZUtil;
+import com.crm.mylibrary.activity.base.BaseActivity;
+import com.crm.mylibrary.util.ZUtil;
 
 import java.util.List;
 
@@ -177,6 +177,11 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
             notifyItemInserted(this.mDatas.size());
             notifyItemChanged(this.mDatas.size());
         }
+    }
+
+    @Override
+    public void clearData() {
+
     }
 
     @Override

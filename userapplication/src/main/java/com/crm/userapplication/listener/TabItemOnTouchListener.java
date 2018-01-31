@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
+import com.crm.mylibrary.listener.BaseOnTouchListener;
 import com.crm.userapplication.R;
 
 /**
