@@ -72,6 +72,10 @@ public abstract class BaseActivity<T extends BaseContract.IBasePresenter> extend
 
     protected abstract T getP();
 
+    public ZUtil getUtil() {
+        return util;
+    }
+
     public Vibrator getmVibrator() {
         return mVibrator;
     }

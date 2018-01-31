@@ -15,4 +15,8 @@ public interface RecyclerViewOperateHolder<T> {
 
     void insertData(T data);
 
+    void clearData();
+
+    void notifyDataChanged();
+
 }

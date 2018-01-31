@@ -101,16 +101,18 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
+        int res = 0;
         if(isHaveHeader&&isHaveFooter) {
             // 内容+footer
-            return mDatas.size() + 2;
+            res = mDatas.size() + 2;
         } else if(isHaveHeader || isHaveFooter) {
             // 内容+footer||header
-            return mDatas.size() + 1;
+            res = mDatas.size() + 1;
         } else {
             // 内容
-            return mDatas.size();
+            res = mDatas.size();
         }
+        return res == 0 ? 1:res;
     }
 
     public abstract void convert(RecyclerView.ViewHolder holder, T data, int position);
