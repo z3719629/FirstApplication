@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FirstApplication.iml" filepath="$PROJECT_DIR$/FirstApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mylibrary/mylibrary.iml" filepath="$PROJECT_DIR$/mylibrary/mylibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/onenetcontroller/onenetcontroller.iml" filepath="$PROJECT_DIR$/onenetcontroller/onenetcontroller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/userapplication/userapplication.iml" filepath="$PROJECT_DIR$/userapplication/userapplication.iml" />
+    </modules>
+  </component>
+</project>

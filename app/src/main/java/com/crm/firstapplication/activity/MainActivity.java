@@ -295,24 +295,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * 单击事件
-     * type默认View.OnClickListener.class，故此处可以简化不写，@Event(R.id.bt_main)
-     */
-    @Event(type = View.OnClickListener.class,value = R.id.tab_layout)
-    private void testInjectOnClick(View v){
-        Snackbar.make(v,"OnClickListener",Snackbar.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 长按事件
-     */
-    @Event(type = View.OnLongClickListener.class,value = R.id.tab_layout)
-    private boolean testOnLongClickListener(View v){
-        Snackbar.make(v,"testOnLongClickListener",Snackbar.LENGTH_SHORT).show();
-        return true;
-    }
-
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                             long arg3) {

@@ -37,8 +37,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
     compile 'com.android.support:appcompat-v7:23.+'
     compile 'com.android.support:design:23.+'
+
     compile 'org.xutils:xutils:3.5.0'
 
     compile 'com.ikimuhendis:ldrawer:0.1' // 动态侧边栏插件
@@ -77,4 +79,10 @@ dependencies {
 
     //compile 'jp.wasabeef:recyclerview-animators:2.2.7'  // recyclerview动画插件
 
+    compile 'com.google.dagger:dagger:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+
+    //compile 'com.google.dagger:dagger-android:2.14.1'
+    //compile 'com.google.dagger:dagger-android-support:2.14.1' // if you use the support libraries
+    //annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
 }

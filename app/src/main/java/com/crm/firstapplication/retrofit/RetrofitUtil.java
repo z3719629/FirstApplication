@@ -40,9 +40,6 @@ public class RetrofitUtil {
         private static Retrofit getInstanace() {
 
             OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
-                    .connectTimeout(60, TimeUnit.SECONDS)//设置连接超时时间
-                    .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
-                    .writeTimeout(60, TimeUnit.SECONDS)//设置写入超时时间
                     .addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                         @Override
                         public void log(String message) {
@@ -61,6 +58,9 @@ public class RetrofitUtil {
                             return chain.proceed(mRequest);
                         }
                     })//添加日志拦截器
+                    .connectTimeout(60, TimeUnit.SECONDS)//设置连接超时时间
+                    .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                    .writeTimeout(60, TimeUnit.SECONDS)//设置写入超时时间
                     .build();
 
             // Gson
