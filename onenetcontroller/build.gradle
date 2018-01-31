@@ -62,4 +62,15 @@ dependencies {
     compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
         exclude group: 'com.android.support'
     })
+
+    // onenet
+    compile ('com.chinamobile.iot.onenet:onenet-sdk:+') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.okhttp3', module: 'logging-interceptor'
+    }
+
+    //QMUI
+    //compile 'com.qmuiteam:qmui:1.0.6'
+
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

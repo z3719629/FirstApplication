@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn com.chinamobile.iot.onenet.**
+-keep class com.chinamobile.iot.onenet.** { *; }
+
+-dontwarn okhttp3.**
+-keep class okhttp3.** {*;}
+-dontwarn okio.**

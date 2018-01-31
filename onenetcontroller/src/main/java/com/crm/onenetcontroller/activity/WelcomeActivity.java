@@ -76,6 +76,12 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        t = null;
+    }
+
+    @Override
     protected BaseContract.IBasePresenter getP() {
         return null;
     }
@@ -85,10 +91,7 @@ public class WelcomeActivity extends BaseActivity {
         if(Events.EVENT_JUMP == events.getCode()) {
             Toast.makeText(WelcomeActivity.this,"加载完毕",Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.default_anim_in, R.anim.default_anim_out);
-            WelcomeActivity.this.finish();
+            util.startNewActivity(this, MainActivity.class, true);
         }
     }
 

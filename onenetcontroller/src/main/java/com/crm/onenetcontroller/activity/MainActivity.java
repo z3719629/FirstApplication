@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.chinamobile.iot.onenet.OneNetApi;
+import com.chinamobile.iot.onenet.OneNetApiCallback;
 import com.crm.mylibrary.activity.base.BaseActivity;
 import com.crm.mylibrary.rxbus.Events;
 import com.crm.mylibrary.view.ChangeColorIconWithTextView;
@@ -48,7 +50,7 @@ public class MainActivity extends BaseActivity<MainContract.IMainPresenter> impl
     protected void initCreate(@Nullable Bundle savedInstanceState) throws DbException {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         // 改变状态栏颜色
-        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#000000"), 0);
+        StatusBarCompat.setStatusBarColor(this, Color.parseColor("#2292e7"), 0);
 
         initToolBar(mBinding.toolbar);
 
@@ -105,7 +107,7 @@ public class MainActivity extends BaseActivity<MainContract.IMainPresenter> impl
     private void initToolBar(final Toolbar toolbar) {
 
         //title
-        toolbar.setTitle("CRM");
+        toolbar.setTitle("ONENET");
         //以上3个属性必须在setSupportActionBar(toolbar)之前调用
         setSupportActionBar(toolbar);
         //设置导航Icon，必须在setSupportActionBar(toolbar)之后设置
@@ -137,9 +139,9 @@ public class MainActivity extends BaseActivity<MainContract.IMainPresenter> impl
 
     private void initViews(final TabLayout mTablayout, final ViewPager mViewPager) {
 
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+        FragmentPagerAdapter fpa = new FragmentPagerAdapter(getSupportFragmentManager()) {
 
-            private String[] mTitles = new String[]{"菜单一", "菜单二", "菜单三", "菜单四"};
+            private String[] mTitles = new String[]{"菜单一", "菜单一", "菜单一", "菜单一"};
 
             @Override
             public Fragment getItem(int position) {
@@ -163,9 +165,11 @@ public class MainActivity extends BaseActivity<MainContract.IMainPresenter> impl
                 return mTitles[position];
             }
 
-        });
+        };
+        mViewPager.setAdapter(fpa);
 
         mViewPager.setCurrentItem(0);
+        mViewPager.setOffscreenPageLimit(fpa.getCount());
 
         mTablayout.setupWithViewPager(mViewPager);
 

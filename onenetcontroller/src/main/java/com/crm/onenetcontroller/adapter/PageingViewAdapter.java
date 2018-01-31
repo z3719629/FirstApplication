@@ -1,11 +1,13 @@
 package com.crm.onenetcontroller.adapter;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,19 +18,23 @@ import com.crm.mylibrary.data.DataLoadingSubject;
 import com.crm.mylibrary.listener.RecyclerViewItemOnTouchListener;
 import com.crm.mylibrary.util.ZUtil;
 import com.crm.onenetcontroller.R;
+import com.crm.onenetcontroller.activity.DeviceActivity;
+import com.crm.onenetcontroller.activity.MainActivity;
+import com.crm.onenetcontroller.onenet.DeviceItem;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/1/10.
  */
-public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewAdapter<T> implements DataLoadingSubject.DataLoadingCallbacks, RecyclerViewOperateHolder<T> {
+public abstract class PageingViewAdapter<T extends Serializable, V extends BaseActivity> extends RecyclerViewAdapter<T> implements DataLoadingSubject.DataLoadingCallbacks, RecyclerViewOperateHolder<T> {
 
     private V activityContext;
 
     private boolean showLoadingMore;
 
-    public PageingViewAdapter(V activityContext, List datas, boolean isHaveHeader, boolean isHaveFooter) {
+    public PageingViewAdapter(V activityContext, List<T> datas, boolean isHaveHeader, boolean isHaveFooter) {
         super(datas, isHaveHeader, isHaveFooter);
         this.activityContext = activityContext;
     }
@@ -52,7 +58,7 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
     }
 
     @Override
-    public void convert(RecyclerView.ViewHolder holderOld, T data, int position) {
+    public void convert(RecyclerView.ViewHolder holderOld, final T data, int position) {
 
         final RecycleViewHolder holder = (RecycleViewHolder)holderOld;
 
@@ -64,7 +70,6 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
             protected void doOnLongPress(MotionEvent e, int x, int y) {
                 activityContext.getmVibrator().vibrate(30);
                 // 弹框左上角显示在触摸点，偏移x 50 y 50
-                // 根据位置判断显示位置 TODO
                 holder.getPopUpView().showAsDropDown(holder.itemView, x + 50, y + 50 - holder.itemView.getHeight());
                 holder.getPopUpView().setAnimationStyle(R.style.windowAnimBottom);
                 LinearLayout linearLayout = (LinearLayout)holder.getPopUpView().getContentView();
@@ -82,7 +87,7 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
                                         holder.getPopUpView().dismiss();
                                         break;
                                     case R.id.popup_window_menu2:
-                                        insertData((T) "sdfsf");
+                                        insertData(data);
                                         holder.getPopUpView().dismiss();
                                         break;
                                     case R.id.popup_window_menu3:
@@ -97,48 +102,20 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
                     });
                 }
             }
-        });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                //View view = ((ViewGroup)v).getChildAt(1);
-                //Toast.makeText(getActivity(), ((TextView)view).getText(), Toast.LENGTH_SHORT).show();
-                //v.setBackgroundColor(Color.parseColor("#000000"));
+            protected void doOnTouchActionUp(View v, MotionEvent event) {
+                super.doOnTouchActionUp(v, event);
+                doOnTouchActionUpSub(v, event, data);
             }
         });
 
-        if(holder.getViewType() == RecyclerViewAdapter.TYPE_BODY) {
-            holder.setText(R.id.id_num, (String)data);
-            Button b = holder.getView(R.id.recycler_view_button);
-            final TextView tv = holder.getView(R.id.id_num);
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(activityContext, tv.getText(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else if(holder.getViewType() == RecyclerViewAdapter.TYPE_FOOTER) {
-            final TextView tv = holder.getView(R.id.textViewFooter);
-            tv.setText("无法加载更多");
-
-            // 刷新太快 所以使用Hanlder延迟两秒
-//                    Handler handler = new Handler();
-//                    handler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            holder.getP().getmDatas().add("234");
-//                            notifyDataSetChanged();
-//                        }
-//                    }, 2000);
-        } else if(holder.getViewType() == RecyclerViewAdapter.TYPE_HEADER) {
-            final TextView tv = holder.getView(R.id.textViewHeader);
-            tv.setText("Header");
-            //final ProgressBar progressBar = holder.getView(R.id.headerProgressBar);
-
-        }
+        this.editData(holder, data, position);
 
     }
+
+    public abstract void doOnTouchActionUpSub(View v, MotionEvent event, T data);
 
     @Override
     public void updateData(List<T> data) {
@@ -172,11 +149,38 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
     @Override
     public void insertData(T data) {
         int size = this.mDatas.size();
-        if(size > 0) {
+        if(size >= 0) {
             this.mDatas.add(data);
             notifyItemInserted(this.mDatas.size());
-            notifyItemChanged(this.mDatas.size());
         }
+    }
+
+    public void insertDataList(List<T> data) {
+        int size = this.mDatas.size();
+        if(size >= 0) {
+            this.mDatas.addAll(data);
+            notifyItemRangeInserted(size, this.mDatas.size());
+        }
+    }
+
+    @Override
+    public void clearData() {
+        int size = this.mDatas.size();
+        if(size > 0) {
+            this.mDatas.clear();
+            notifyItemRangeRemoved(0, size);
+        }
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        notifyDataSetChanged();
+    }
+
+    public abstract void editData(RecyclerView.ViewHolder holderOld, final T data, int position);
+
+    public boolean isDataLoading() {
+        return showLoadingMore;
     }
 
     @Override
@@ -191,7 +195,6 @@ public class PageingViewAdapter<T, V extends BaseActivity> extends RecyclerViewA
         if (!showLoadingMore) return;
         int loadingPos = getLoadingMoreItemPosition();
         showLoadingMore = false;
-        notifyItemInserted(loadingPos);
         notifyItemChanged(loadingPos);
     }
 

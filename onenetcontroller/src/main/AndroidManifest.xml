@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crm.onenetcontroller">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -9,6 +12,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- OneNET product api-key -->
+        <meta-data
+            android:name="com.chinamobile.iot.onenet.APP-KEY"
+            android:value="T5F8ks=tE68sol=Ib=oky8hDviI=" />
+
+        <!-- OneNET server host -->
+        <meta-data
+            android:name="com.chinamobile.iot.onenet.HOST"
+            android:value="api.heclouds.com" />
+
+        <!-- activity -->
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,8 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity">
-        </activity>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.DeviceActivity" />
+        <activity android:name=".activity.DSItemViewActivity"></activity>
     </application>
 
 </manifest>
