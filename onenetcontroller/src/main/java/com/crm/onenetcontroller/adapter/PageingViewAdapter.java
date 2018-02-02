@@ -107,7 +107,9 @@ public abstract class PageingViewAdapter<T extends Serializable, V extends BaseA
             @Override
             protected void doOnTouchActionUp(View v, MotionEvent event) {
                 super.doOnTouchActionUp(v, event);
-                doOnTouchActionUpSub(v, event, data);
+                if(!holder.getPopUpView().isShowing()) {
+                    doOnTouchActionUpSub(v, event, data);
+                }
             }
         });
 
@@ -170,11 +172,6 @@ public abstract class PageingViewAdapter<T extends Serializable, V extends BaseA
             this.mDatas.clear();
             notifyItemRangeRemoved(0, size);
         }
-    }
-
-    @Override
-    public void notifyDataChanged() {
-        notifyDataSetChanged();
     }
 
     public abstract void editData(RecyclerView.ViewHolder holderOld, final T data, int position);

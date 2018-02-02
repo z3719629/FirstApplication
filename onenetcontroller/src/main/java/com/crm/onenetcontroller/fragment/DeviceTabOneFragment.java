@@ -153,7 +153,7 @@ public class DeviceTabOneFragment extends BaseFragment {
 
             @Override
             public void doOnTouchActionUpSub(View v, MotionEvent event, DSItem data) {
-// 跳转到详细页面 并传递参数
+                // 跳转到详细页面 并传递参数
                 ((DeviceActivity)getActivity()).getUtil().startNewActivity(getActivity(), DSItemViewActivity.class, false, data, ((DeviceActivity) getActivity()).getDeviceId());
             }
         };

@@ -9,6 +9,10 @@
     android:focusable="true"
     android:background="@drawable/recycle_view_normal">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/ds_id"
         android:layout_width="wrap_content"
@@ -35,5 +39,7 @@
         android:id="@+id/ds_unit_symbol"
         android:layout_below="@+id/ds_unit"
         android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -72,5 +72,11 @@ dependencies {
     //QMUI
     //compile 'com.qmuiteam:qmui:1.0.6'
 
+    //chart
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
+
+    // mqtt
+    compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
+    compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
 }
