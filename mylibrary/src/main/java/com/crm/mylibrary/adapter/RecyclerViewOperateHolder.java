@@ -17,6 +17,4 @@ public interface RecyclerViewOperateHolder<T> {
 
     void clearData();
 
-    void notifyDataChanged();
-
 }

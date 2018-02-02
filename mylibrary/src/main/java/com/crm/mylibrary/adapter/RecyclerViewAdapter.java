@@ -138,7 +138,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
                 popupView.setBackgroundDrawable(new BitmapDrawable());
                 popupView.setTouchable(true);
                 popupView.setOutsideTouchable(true);
-
+                popupView.isShowing();
             }
 
         }
