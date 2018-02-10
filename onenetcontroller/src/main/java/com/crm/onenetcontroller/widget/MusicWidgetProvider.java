@@ -20,6 +20,7 @@ import com.crm.mylibrary.rxbus.RxBus;
 import com.crm.onenetcontroller.R;
 import com.crm.onenetcontroller.activity.MainActivity;
 import com.crm.onenetcontroller.service.MQTTService;
+import com.crm.onenetcontroller.service.UpdateWidgetService;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 
@@ -36,12 +37,16 @@ public class MusicWidgetProvider extends AppWidgetProvider {
         // Update each requested appWidgetId
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_music);
 
-        Intent intent = new Intent(context, MQTTService.class);
+        Intent intentRefrash = new Intent(context, MQTTService.class);
 //        PendingIntent pendingIntent = PendingIntent.getActivity(context,
 //                0 /* no requestCode */, intent, 0 /* no flags */);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.button, pendingIntent);
-        views.setInt(R.id.button, "setBackgroundColor", Color.RED);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intentRefrash, 0);
+        views.setOnClickPendingIntent(R.id.widget_button_refresh, pendingIntent);
+        views.setInt(R.id.widget_button_change, "setBackgroundColor", Color.RED);
+
+        Intent intentChange = new Intent(context, UpdateWidgetService.class);
+        pendingIntent = PendingIntent.getService(context, 0, intentChange, 0);
+        views.setOnClickPendingIntent(R.id.widget_button_change, pendingIntent);
 
         Intent startUpdateIntent = new Intent(context, MQTTService.class);
         context.startService(startUpdateIntent);

@@ -56,8 +56,8 @@ public class LoginTabOneFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initRecyclerView(mBinding.recyclerView);
         initSwipeRefresh(mBinding.layoutSwipeRefresh);
+        initRecyclerView(mBinding.recyclerView);
     }
 
     @Override
@@ -109,6 +109,8 @@ public class LoginTabOneFragment extends BaseFragment {
                 super.onDataLoaded(data);
             }
         };
+
+        mDataManager.setSwipeRefreshLayout(this.mSwipeRefreshLayout);
 
         mDataManager.registerCallback(mRecycleAdapter);
 

@@ -41,7 +41,7 @@
         <!-- Mqtt Service -->
         <service android:name="org.eclipse.paho.android.service.MqttService"/>
         <service android:name="com.crm.onenetcontroller.service.MQTTService"/>
-        <service android:name="com.crm.onenetcontroller.widget.UpdateWidgetService"/>
+        <service android:name=".service.UpdateWidgetService"/>
 
         <!--Custom Music Widget-->
         <receiver android:name="com.crm.onenetcontroller.widget.MusicWidgetProvider">
@@ -51,6 +51,9 @@
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED"/>
                 <!-- 解锁完成后会调用 -->
                 <action android:name="android.intent.action.USER_PRESENT" />
+
+                <action android:name="android.intent.action.SCREEN_ON" />
+
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_music_info" />
         </receiver>

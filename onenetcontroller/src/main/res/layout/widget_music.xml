@@ -6,13 +6,22 @@
     >
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="110dp"
+        android:id="@+id/widget_button_change"
+        android:layout_width="70dp"
         android:layout_height="40dp"
         android:textColor="#ffffff"
         android:textSize="18dp"
-        android:gravity="center"
-        android:text="MUSIC"
+        android:text="REF"
+        android:background="#00E3E3"
+        />
+
+    <Button
+        android:id="@+id/widget_button_refresh"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:text="R"
         android:background="#00E3E3"
         />
 
